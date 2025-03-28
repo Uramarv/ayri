@@ -1,5 +1,26 @@
-<script>
-    fetch("/.netlify/functions/proxy")
-        .then(res => res.text())
-        .then(data => document.getElementById("result").innerText = data);
-</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Header Exploit</title>
+</head>
+<body>
+    <h1>Admin Access Exploit</h1>
+    <button onclick="exploit()">Get Flag</button>
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+    <script>
+        async function exploit() {
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerText = "Sending request...";
+            
+            try {
+                const response = await fetch("/.netlify/functions/proxy");
+                const data = await response.text();
+                resultDiv.innerText = data;
+            } catch (error) {
+                resultDiv.innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
