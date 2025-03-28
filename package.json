@@ -2,7 +2,11 @@
 {
   "name": "netlify-functions",
   "version": "1.0.0",
+  "scripts": {
+    "build": "npm run build"
+  },
   "dependencies": {
     "node-fetch": "^2.6.7"
   }
+  
 }
