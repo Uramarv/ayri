@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Host Header Exploit</title>
+  <title>Admin Access Exploit</title>
+  <style>
+    #result {
+      white-space: pre-wrap;
+      margin: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
-    <h1>Admin Access Exploit</h1>
-    <button onclick="exploit()">Get Flag</button>
-    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+  <h1>Flag Generator</h1>
+  <button onclick="getFlag()">Get Flag</button>
+  <div id="result">Hier erscheint die Flagge...</div>
 
-    <script>
-        async function exploit() {
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerText = "Sending request...";
-            
-            try {
-                const response = await fetch("/.netlify/functions/proxy");
-                const data = await response.text();
-                resultDiv.innerText = data;
-            } catch (error) {
-                resultDiv.innerText = `Error: ${error.message}`;
-            }
-        }
-    </script>
+  <script>
+    async function getFlag() {
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = "Request wird gesendet...";
+      
+      try {
+        const response = await fetch("/.netlify/functions/proxy");
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.text();
+        resultDiv.textContent = data;
+      } catch (error) {
+        resultDiv.textContent = `Fehler: ${error.message}`;
+        console.error("Fetch error:", error);
+      }
+    }
+  </script>
 </body>
 </html>
